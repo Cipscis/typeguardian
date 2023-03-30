@@ -1,0 +1,1 @@
+{"version":3,"file":"writeIndentation.js","sourceRoot":"","sources":["../../src/typeguardian/writeIndentation.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,MAAM,UAAU,gBAAgB,CAAC,MAAM,GAAG,MAAM,EAAE,KAAK,GAAG,CAAC;IAC1D,MAAM,YAAY,GAAG,IAAI,KAAK,CAAC,KAAK,CAAC,CAAC;IACtC,YAAY,CAAC,IAAI,CAAC,MAAM,CAAC,CAAC;IAE1B,OAAO,YAAY,CAAC,IAAI,CAAC,EAAE,CAAC,CAAC;AAC9B,CAAC"}

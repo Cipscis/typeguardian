@@ -1,0 +1,103 @@
+:root {
+  --bg: #ffffff;
+  --colour: #000000;
+  --shadow: rgba(0, 0, 0, 0.2);
+  --error: red;
+  --gutter: 2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --colour: #ffffff;
+    --shadow: rgba(255, 255, 255, 0.2);
+  }
+}
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  color-scheme: dark light;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--colour);
+}
+
+.content {
+  margin: 1rem auto;
+  padding-inline: var(--gutter);
+  max-width: 80ch;
+}
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  margin-top: 0;
+}
+.content section + section {
+  margin-top: 2rem;
+  border-top: 1px solid var(--colour);
+  padding-top: 2rem;
+}
+
+.typeguardian {
+  display: grid;
+  gap: 2rem;
+  padding: 1rem var(--gutter);
+  min-height: calc(100svh - 5rem);
+  grid-template-areas: "header" "controls" "input" "output";
+  grid-template-rows: auto auto 1fr 1fr;
+}
+@media (width >= 1024px) {
+  .typeguardian {
+    grid-template-areas: "header header" "controls controls" "input output";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto 1fr;
+  }
+}
+
+.typeguardian__header {
+  grid-area: header;
+}
+
+.typeguardian__controls {
+  grid-area: controls;
+  display: flex;
+  gap: 1rem;
+}
+
+.typeguardian__input {
+  grid-area: input;
+}
+
+.typeguardian__output {
+  grid-area: output;
+}
+
+.typeguardian__title {
+  margin: 0;
+}
+
+.typeguardian__input,
+.typeguardian__output {
+  padding: 0.5rem;
+  min-height: 10rem;
+}
+.typeguardian__input.has-error,
+.typeguardian__output.has-error {
+  border-color: var(--error);
+}
+
+.toast {
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  padding: 0.5rem;
+  background: var(--bg);
+  border: 1px solid currentColor;
+  box-shadow: 0 0 0.5rem var(--shadow);
+}

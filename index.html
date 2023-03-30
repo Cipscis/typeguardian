@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TypeGuardian</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="stylesheet" href="/typeguardian/assets/css/main.css" />
+	<script type="module" src="/typeguardian/assets/js/dist/main.js"></script>
+</head>
+<body>
+	<section class="typeguardian js-typeguardian">
+		<div class="typeguardian__header">
+			<h1 class="typeguardian__title">TypeGuardian</h1>
+		</div>
+
+		<div class="typeguardian__controls">
+			<button type="button" class="typeguardian__generate js-typeguardian__generate">Generate</button>
+			<button type="button" class="typeguardian__copy js-typeguardian__copy">Copy</button>
+		</div>
+
+		<textarea
+		class="typeguardian__input js-typeguardian__input"
+			placeholder="Put your type or interface definition here"
+		></textarea>
+		<textarea
+			class="typeguardian__output js-typeguardian__output"
+			placeholder="Hit the &quot;Generate&quot; button, or press Ctrl + Enter to generate and copy the results"
+		></textarea>
+
+		<span
+			class="toast js-toast"
+			hidden
+			aria-live="polite"
+		></span>
+	</section>
+
+	<section class="content">
+		<section>
+			<h2>Explanation</h2>
+
+			<p>Defining all your types and interfaces using TypeScript provides a degree of type safety when using JavaScript, as it's possible to catch potential errors while writing code, instead of having to see them in execution. However, this is a challenge when it comes to communicating with external systems, where we cannot guarantee that the data they send us will align with the definitions we have written.</p>
+
+			<p>The solution to this is to write a <strong>typeguard</strong> function, which checks that an object meets all of our expectations when we expect it to be of a particular type.</p>
+
+			<p>However, the task of writing a typeguard is quite tedious. Luckily, it's also quite formulaic, which means it's often possible to generate a typeguard function based off a type definition. That's what this tool, TypeGuardian, is for.</p>
+		</section>
+
+		<section>
+			<h2>Strategy</h2>
+
+			<p>The typeguard functions generated here follow a certain format:</p>
+
+			<h3>1. Type assertion</h3>
+
+			<p>TypeGuardian starts by asserting that the value being tested is of the correct type, which will allow us to access the properties that we want to check for.</p>
+
+			<p>Usually, type assertions in TypeScript can be unsafe and should be avoided where possible. In this case, because we're checking it piece by piece rather than actually trying to use any of it, we shouldn't run into trouble.</p>
+
+			<h3>2. Object check</h3>
+
+			<p>Before checking any properties, we check that the value is an object. Because checking <code>typeof null</code> also results in <code>'object'</code>, we also need to check that the value is not <code>null</code>.</p>
+
+			<h3>3. Check each property</h3>
+
+			<p>This is the main part of the typeguard function. Property by property, we check that each one has the correct type.</p>
+
+			<p>As soon as we find any property that doesn't meet our expectations, we return <code>false</code> because the value has failed our type check.</p>
+
+			<p>These conditions are each written in an "unless" form, where the innermost part of the condition is a positive assertion (e.g. if a property should be a string, it checks that it is a string), but then that positive part is inverted. So it can be read as "unless this property meets our expectations&hellip; return false".</p>
+
+			<p>There are several types of check that can be done here. The most basic is checking the result of using the <code>typeof</code> operator, when checking for primitive types like <code>string</code>. TypeGuardian can also handle union types and array types.</p>
+
+			<h3>4. Return <code>true</code></h3>
+
+			<p>If the typeguard function passes through all our checks without a single failure, then we can say that the value meets our expectations, and return <code>true</code>.</p>
+		</section>
+
+		<section>
+			<h2>Shortcomings</h2>
+
+			<p>TypeGuardian is a fairly simple and rigid tool, and it relies on type definitions fed into it meeting certain criteria:</p>
+
+			<ul>
+				<li>Type definitions should describe object types</li>
+				<li>If any properties have complex types, they should have their own type definition with its own separate typeguard function</li>
+				<li>TypeGuardian assumes that all custom types and interfaces will use a PascalCase naming convention</li>
+				<li>Because TypeGuardian doesn't contain a proper parser, it takes some shortcuts when checking for block comments. It assumes all block comments take the form of JSDoc comments, and any line starting with a <code>*</code> is part of a block comment.</li>
+				<li>TypeGuardian doesn't currently support unions that include arrays of union types, such as <code>Array&lt;string | number&gt; | null</code>.
+			</ul>
+		</section>
+	</section>
+</body>
+</html>

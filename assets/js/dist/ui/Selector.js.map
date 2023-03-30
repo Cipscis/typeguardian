@@ -1,0 +1,1 @@
+{"version":3,"file":"Selector.js","sourceRoot":"","sources":["../../src/ui/Selector.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,MAAM,CAAC,MAAM,QAAQ,GAAG;IACvB,QAAQ,EAAE,kBAAkB;IAC5B,KAAK,EAAE,yBAAyB;IAChC,MAAM,EAAE,0BAA0B;IAElC,QAAQ,EAAE,4BAA4B;IACtC,IAAI,EAAE,wBAAwB;IAE9B,KAAK,EAAE,WAAW;CACT,CAAC"}

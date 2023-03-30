@@ -1,0 +1,9 @@
+.typeguardian__input,
+.typeguardian__output {
+	padding: 0.5rem;
+	min-height: 10rem;
+
+	&.has-error {
+		border-color: var(--error);
+	}
+}
