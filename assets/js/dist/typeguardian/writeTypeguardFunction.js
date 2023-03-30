@@ -7,7 +7,7 @@ export function writeTypeguardFunction(typedefArg, indent = '    ') {
     const typeguard = `/**
  * Typeguard function for {@linkcode ${name}}
  *
- * Generated with {@link TypeGuardian https://cipscis.github.io/typeguardian} v${version}
+ * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
  */
 function is${name}(testData: unknown): testData is ${name} {
 ${indent}const data = testData as ${name};
