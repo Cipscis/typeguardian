@@ -1,7 +1,7 @@
 {
-	"name": "base-project",
-	"version": "0.1.0",
-	"description": "This is my base project to use when creating new projects.",
+	"name": "typeguardian",
+	"version": "1.0.0",
+	"description": "A tool for generating typeguard functions in TypeScript.",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -18,7 +18,7 @@
 	"author": "Mark Hanna",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/cipscis/base-project.git"
+		"url": "https://github.com/cipscis/typeguardian.git"
 	},
 	"license": "Hippocratic-2.1",
 	"devDependencies": {

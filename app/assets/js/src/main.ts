@@ -1,1 +1,3 @@
-console.log('code goes here');
+import { init } from './ui/index.js';
+
+init();

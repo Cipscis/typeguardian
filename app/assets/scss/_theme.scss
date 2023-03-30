@@ -1,0 +1,16 @@
+:root {
+	--bg: #ffffff;
+	--colour: #000000;
+	--shadow: #{rgba(#000000, 0.2)};
+	--error: red;
+
+	--gutter: 2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #000000;
+		--colour: #ffffff;
+		--shadow: #{rgba(#ffffff, 0.2)};
+	}
+}
