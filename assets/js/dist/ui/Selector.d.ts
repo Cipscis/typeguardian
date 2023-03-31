@@ -8,6 +8,7 @@ export declare const Selector: {
     readonly OUTPUT: ".js-typeguardian__output";
     readonly GENERATE: ".js-typeguardian__generate";
     readonly COPY: ".js-typeguardian__copy";
+    readonly INDENTATION: ".js-typeguardian__indentation";
     readonly TOAST: ".js-toast";
 };
 export type Selector = EnumTypeOf<typeof Selector>;

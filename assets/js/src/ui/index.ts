@@ -1,6 +1,7 @@
-import { copy } from './copy.js';
+import { copy } from './actions/copy.js';
 import { CssClass } from './CssClass.js';
-import { generate } from './generate.js';
+import { generate } from './actions/generate.js';
+import { persistOptions } from './options/persistOptions.js';
 import { Selector } from './Selector.js';
 
 /**
@@ -11,6 +12,7 @@ export function init(): void {
 }
 
 function initEvents(): void {
+	// Generate
 	document.querySelectorAll<HTMLElement>(Selector.GENERATE).forEach((el) => el.addEventListener('click', generate));
 	document.addEventListener('keydown', (e) => {
 		const $input = document.querySelector<HTMLElement>(Selector.INPUT);
@@ -31,5 +33,9 @@ function initEvents(): void {
 		}
 	});
 
+	// Copy
 	document.querySelectorAll<HTMLElement>(Selector.COPY).forEach((el) => el.addEventListener('click', copy));
+
+	// Persist options
+	document.querySelectorAll<HTMLElement>(Selector.INDENTATION).forEach((el) => el.addEventListener('change', persistOptions));
 }

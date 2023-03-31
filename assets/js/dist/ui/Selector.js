@@ -7,6 +7,7 @@ export const Selector = {
     OUTPUT: '.js-typeguardian__output',
     GENERATE: '.js-typeguardian__generate',
     COPY: '.js-typeguardian__copy',
+    INDENTATION: '.js-typeguardian__indentation',
     TOAST: '.js-toast',
 };
 //# sourceMappingURL=Selector.js.map

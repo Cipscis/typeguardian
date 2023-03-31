@@ -1,0 +1,1 @@
+{"version":3,"file":"isEnum.js","sourceRoot":"","sources":["../../src/util/isEnum.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GAgCG;AACH,MAAM,UAAU,MAAM,CACrB,WAA8B;IAE9B,MAAM,MAAM,GAAG,MAAM,CAAC,MAAM,CAAC,WAAW,CAAC,CAAC;IAE1C,OAAO,SAAS,aAAa,CAAC,KAAc;QAC3C,OAAQ,MAAyB,CAAC,QAAQ,CAAC,KAAK,CAAC,CAAC;IACnD,CAAC,CAAC;AACH,CAAC"}

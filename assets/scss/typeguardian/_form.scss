@@ -1,9 +1,11 @@
 .typeguardian__input,
 .typeguardian__output {
 	padding: 0.5rem;
-	min-height: 10rem;
+	min-height: 100%;
 
 	&.has-error {
 		border-color: var(--error);
 	}
+
+	resize: vertical;
 }

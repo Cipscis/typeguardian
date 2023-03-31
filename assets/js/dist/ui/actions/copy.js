@@ -1,5 +1,5 @@
-import { Selector } from './Selector.js';
-import { toast } from './toast.js';
+import { Selector } from '../Selector.js';
+import { toast } from '../toast.js';
 /**
  * Copy the current output from a TypeGuardian instance to the clipboard.
  */

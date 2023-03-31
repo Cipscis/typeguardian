@@ -5,5 +5,8 @@ import { EnumTypeOf } from '../util/EnumTypeOf.js';
  */
 export const CssClass = {
 	ERROR: 'has-error',
+
+	TOAST_CONTAINER: 'toast__container',
+	TOAST: 'toast',
 } as const;
 export type CssClass = EnumTypeOf<typeof CssClass>;

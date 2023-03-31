@@ -2,15 +2,24 @@
   --bg: #ffffff;
   --colour: #000000;
   --shadow: rgba(0, 0, 0, 0.2);
-  --error: red;
+  --error: #ff0000;
+  --offset-bg: #dddddd;
+  --offset-colour: #000000;
+  --offset-bg--active: #eeeeee;
+  --offset-colour--active: #000000;
   --gutter: 2rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #000000;
+    --bg: #111111;
     --colour: #ffffff;
     --shadow: rgba(255, 255, 255, 0.2);
+    --error: #ff6666;
+    --offset-bg: #666666;
+    --offset-colour: #ffffff;
+    --offset-bg--active: #777777;
+    --offset-colour--active: #ffffff;
   }
 }
 * {
@@ -19,10 +28,19 @@
 
 html, body {
   margin: 0;
-  padding: 0;
+  padding: 0 0 2rem 0;
   color-scheme: dark light;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
   color: var(--colour);
+}
+
+.no-transitions * {
+  transition: none !important;
+}
+
+button {
+  all: unset;
 }
 
 .content {
@@ -66,8 +84,6 @@ html, body {
 
 .typeguardian__controls {
   grid-area: controls;
-  display: flex;
-  gap: 1rem;
 }
 
 .typeguardian__input {
@@ -78,24 +94,83 @@ html, body {
   grid-area: output;
 }
 
+.no-js .typeguardian__controls,
+.no-js .typeguardian__input,
+.no-js .typeguardian__output {
+  display: none;
+}
+
+.typeguardian__no-js {
+  grid-row: 2/5;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.2rem;
+  color: var(--error);
+}
+@media (width >= 1024px) {
+  .typeguardian__no-js {
+    grid-column: 1/3;
+    grid-row: 2/4;
+  }
+}
+
 .typeguardian__title {
+  display: inline-block;
   margin: 0;
+  font-size: 2rem;
+}
+@media (width >= 768px) {
+  .typeguardian__title {
+    font-size: 3rem;
+  }
+}
+
+.typeguardian__controls__actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.typeguardian__button {
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  border-radius: 0.2rem;
+  background: var(--offset-bg);
+  color: var(--offset-colour);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+.typeguardian__button:hover, .typeguardian__button:focus {
+  background: var(--offset-bg--active);
+  color: var(--offset-colour--active);
+}
+
+.typeguardian__controls__options {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .typeguardian__input,
 .typeguardian__output {
   padding: 0.5rem;
-  min-height: 10rem;
+  min-height: 100%;
+  resize: vertical;
 }
 .typeguardian__input.has-error,
 .typeguardian__output.has-error {
   border-color: var(--error);
 }
 
-.toast {
+.toast__container {
   position: fixed;
   bottom: 1rem;
-  right: 2rem;
+  right: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
   padding: 0.5rem;
   background: var(--bg);
   border: 1px solid currentColor;

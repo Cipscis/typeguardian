@@ -1,6 +1,7 @@
-import { copy } from './copy.js';
+import { copy } from './actions/copy.js';
 import { CssClass } from './CssClass.js';
-import { generate } from './generate.js';
+import { generate } from './actions/generate.js';
+import { persistOptions } from './options/persistOptions.js';
 import { Selector } from './Selector.js';
 /**
  * Initialise the TypeGuardian UI.
@@ -9,6 +10,7 @@ export function init() {
     initEvents();
 }
 function initEvents() {
+    // Generate
     document.querySelectorAll(Selector.GENERATE).forEach((el) => el.addEventListener('click', generate));
     document.addEventListener('keydown', (e) => {
         const $input = document.querySelector(Selector.INPUT);
@@ -26,6 +28,9 @@ function initEvents() {
             }
         }
     });
+    // Copy
     document.querySelectorAll(Selector.COPY).forEach((el) => el.addEventListener('click', copy));
+    // Persist options
+    document.querySelectorAll(Selector.INDENTATION).forEach((el) => el.addEventListener('change', persistOptions));
 }
 //# sourceMappingURL=index.js.map
