@@ -4,11 +4,21 @@
 
 html, body {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 2rem 0;
 
 	color-scheme: dark light;
 
 	font-family: Arial, Helvetica, sans-serif;
 
+	background-color: var(--bg);
 	color: var(--colour);
+}
+
+.no-transitions * {
+	// Prevent transitions until after initial page load, to prevent transitions happening during page load
+	transition: none !important;
+}
+
+button {
+	all: unset;
 }

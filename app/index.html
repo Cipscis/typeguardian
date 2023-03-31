@@ -1,21 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>TypeGuardian</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+	<link rel="icon" type="image/svg+xml" href="/typeguardian/favicon.svg" />
+	<link rel="icon" type="image/png" href="/typeguardian/favicon.png" />
+
+	<meta name="description" content="Generate typeguard functions for TypeScript with this tool." />
+	<link rel="preload" href="/typeguardian/assets/js/dist/priority.js" as="script" crossorigin />
+
 	<link rel="stylesheet" href="/typeguardian/assets/css/main.css" />
-	<script type="module" src="/typeguardian/assets/js/dist/main.js"></script>
+	<script type="module" src="/typeguardian/assets/js/dist/main.js" defer="defer"></script>
 </head>
-<body>
+<body class="no-js no-transitions">
+	<script type="module" src="/typeguardian/assets/js/dist/priority.js"></script>
 	<section class="typeguardian js-typeguardian">
 		<div class="typeguardian__header">
 			<h1 class="typeguardian__title">TypeGuardian</h1>
 		</div>
 
+		<noscript class="typeguardian__no-js">JavaScript is required to use TypeGuardian</noscript>
+
 		<div class="typeguardian__controls">
-			<button type="button" class="typeguardian__generate js-typeguardian__generate">Generate</button>
-			<button type="button" class="typeguardian__copy js-typeguardian__copy">Copy</button>
+			<div class="typeguardian__controls__actions">
+				<button type="button" class="typeguardian__button typeguardian__generate js-typeguardian__generate">Generate</button>
+				<button type="button" class="typeguardian__button typeguardian__copy js-typeguardian__copy">Copy</button>
+			</div>
+
+			<div class="typeguardian__controls__options">
+				<label>
+					Indentation
+					<select class="js-typeguardian__indentation">
+						<option value="	">Tabs</option>
+						<option value="    ">4 spaces</option>
+						<option value="  ">2 spaces</option>
+					</select>
+				</label>
+			</div>
 		</div>
 
 		<textarea
@@ -26,12 +48,6 @@
 			class="typeguardian__output js-typeguardian__output"
 			placeholder="Hit the &quot;Generate&quot; button, or press Ctrl + Enter to generate and copy the results"
 		></textarea>
-
-		<span
-			class="toast js-toast"
-			hidden
-			aria-live="polite"
-		></span>
 	</section>
 
 	<section class="content">

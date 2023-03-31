@@ -1,9 +1,15 @@
-.toast {
+.toast__container {
 	position: fixed;
 
 	bottom: 1rem;
-	right: 2rem;
+	right: var(--gutter);
 
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.toast {
 	padding: 0.5rem;
 	background: var(--bg);
 	border: 1px solid currentColor;

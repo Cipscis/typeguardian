@@ -11,6 +11,8 @@ export const Selector = {
 	GENERATE: '.js-typeguardian__generate',
 	COPY: '.js-typeguardian__copy',
 
+	INDENTATION: '.js-typeguardian__indentation',
+
 	TOAST: '.js-toast',
 } as const;
 export type Selector = EnumTypeOf<typeof Selector>;

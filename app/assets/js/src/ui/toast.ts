@@ -1,35 +1,71 @@
-import { Selector } from './Selector.js';
+import { CssClass } from './CssClass.js';
 
-export function toast(message: string): void {
-	const $toast = document.querySelector<HTMLElement>(Selector.TOAST);
-	if (!$toast) {
-		return;
+interface ToastOptions {
+	duration: number,
+}
+
+const defaults: ToastOptions = {
+	duration: 6000,
+};
+
+const $toastContainer = document.createElement('div');
+$toastContainer.classList.add(CssClass.TOAST_CONTAINER);
+$toastContainer.setAttribute('aria-live', 'polite');
+
+document.body.append($toastContainer);
+
+export function toast(message: string, opts?: Partial<ToastOptions>): void {
+	const options: ToastOptions = {
+		...defaults,
+		...opts,
+	};
+
+	const $toast = createToast();
+	$toast.innerText = message;
+
+	const keyFrom: Keyframe = {
+		opacity: 0,
+	};
+	if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+		keyFrom.transform = 'translateY(100%)';
 	}
 
-	$toast.innerHTML = message;
-	$toast.hidden = false;
+	$toastContainer.append($toast);
+	$toast.animate([keyFrom, {}], {
+		duration: 300,
+		fill: 'backwards',
+	});
 
-	const keyframes: Keyframe[] = [
-		{
-			opacity: '0',
-		},
-		{
-			opacity: '1',
-			offset: 0.2,
-		},
-		{
-			opacity: '1',
-			offset: 0.8,
-		},
-		{
-			opacity: '0',
-		},
-	];
+	queueDestroyToast($toast, options.duration);
+}
 
-	const animation = $toast.animate(keyframes, 5000);
+function createToast(): HTMLDivElement {
+	const $toast = document.createElement('div');
+	$toast.classList.add(CssClass.TOAST);
 
-	animation.addEventListener('finish', (e) => {
-		$toast.hidden = true;
-		$toast.innerHTML = '';
+	return $toast;
+}
+
+function queueDestroyToast($toast: HTMLElement, duration: number): Promise<void> {
+	return new Promise((resolve, reject) => {
+		window.setTimeout(() => {
+			const keyTo: Keyframe = {
+				opacity: 0,
+			};
+			if (matchMedia('(prefers-reduced-motion: reduce)').matches === false) {
+				keyTo.transform = 'translateY(-100%)';
+			}
+
+			const animation = $toast.animate([{}, keyTo], {
+				duration: 300,
+				fill: 'forwards',
+			});
+
+			animation.addEventListener('finish', () => {
+				$toast.remove();
+				resolve();
+			});
+			// TODO: Handle what happens if animations are prevented
+		}, duration);
 	});
 }

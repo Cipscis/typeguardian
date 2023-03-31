@@ -2,15 +2,28 @@
 	--bg: #ffffff;
 	--colour: #000000;
 	--shadow: #{rgba(#000000, 0.2)};
-	--error: red;
+	--error: #ff0000;
+
+	--offset-bg: #dddddd;
+	--offset-colour: #000000;
+
+	--offset-bg--active: #eeeeee;
+	--offset-colour--active: #000000;;
 
 	--gutter: 2rem;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg: #000000;
+		--bg: #111111;
 		--colour: #ffffff;
 		--shadow: #{rgba(#ffffff, 0.2)};
+		--error: #ff6666;
+
+		--offset-bg: #666666;
+		--offset-colour: #ffffff;
+
+		--offset-bg--active: #777777;
+		--offset-colour--active: #ffffff;
 	}
 }

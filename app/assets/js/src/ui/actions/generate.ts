@@ -1,6 +1,7 @@
-import { writeTypeguardFunction } from '../typeguardian/writeTypeguardFunction.js';
-import { CssClass } from './CssClass.js';
-import { Selector } from './Selector.js';
+import { writeTypeguardFunction } from '../../typeguardian/writeTypeguardFunction.js';
+import { CssClass } from '../CssClass.js';
+import { getOptions } from '../options/getOptions.js';
+import { Selector } from '../Selector.js';
 
 /**
  * Generate a typeguard function from input in the UI, and display it.
@@ -25,7 +26,8 @@ export function generate(this: HTMLElement): void {
 	const input = $input.value;
 
 	try {
-		const output = writeTypeguardFunction(input);
+		const options = getOptions($instance);
+		const output = writeTypeguardFunction(input, options?.indentation);
 
 		$output.value = output;
 		$output.classList.remove(CssClass.ERROR);

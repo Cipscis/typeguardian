@@ -16,6 +16,7 @@ export function writeTypeguardFunction(typedefArg: TypeDef | string, indent = ' 
 	const {
 		name,
 		props,
+		exported,
 	} = typedef;
 
 	const typeguard = `/**
@@ -23,7 +24,7 @@ export function writeTypeguardFunction(typedefArg: TypeDef | string, indent = ' 
  *
  * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
  */
-function is${name}(testData: unknown): testData is ${name} {
+${exported ? 'export ' : ''}function is${name}(testData: unknown): testData is ${name} {
 ${indent}const data = testData as ${name};
 
 ${indent}if (!(
@@ -38,7 +39,8 @@ ${indent}${indent}return false;
 ${indent}}`).join(`\n\n${indent}`)}
 
 ${indent}return true;
-}`;
+}
+`;
 
 	return typeguard;
 }
