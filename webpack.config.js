@@ -3,6 +3,11 @@ dotenv.config();
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+import webpack from 'webpack';
+
+import packageJson from './package.json' assert { type: 'json' };
+
 const __dirname = fileURLToPath(import.meta.url);
 
 const entryPath = './app/assets/js/src';
@@ -32,6 +37,11 @@ const config = {
 			},
 		],
 	},
+	plugins: [
+		new webpack.DefinePlugin({
+			__VERSION__: `'${packageJson.version}'`,
+		}),
+	],
 };
 
 switch (process.env.MODE) {
