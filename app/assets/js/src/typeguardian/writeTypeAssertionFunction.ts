@@ -25,8 +25,10 @@ export function writeTypeAssertionFunction(typedefArg: TypeDef | string, indent 
  * Type assertion function for {@linkcode ${name}}
  *
  * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
+ *
+ * @param [logger] A function that can log errors specifying exactly where nested typeguards failed
  */
-function ${writeTypeAssertionName(name)}(testData: unknown): asserts testData is ${name} {
+function ${writeTypeAssertionName(name)}(testData: unknown, logger?: (message: string) => void): asserts testData is ${name} {
 ${indent}const data = testData as ${name};
 
 ${indent}if (!(
@@ -39,6 +41,7 @@ ${indent}}
 ${indent}${props.map(([propName, propType]) => `if (!(${writeTypeguardExpression(propName, propType, {
 	indent,
 	indentLevel: 1,
+	useAssertions: true,
 })})) {
 ${indent}${indent}throw new TypeError(\`${name} type assertion failed: Property ${propName} was not of type \\\`${propType}\\\`\`);
 ${indent}}`).join(`\n\n${indent}`)}
@@ -50,11 +53,11 @@ ${indent}}`).join(`\n\n${indent}`)}
  *
  * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
  *
- * @param [logger] A function that can log errors specifying exactly where the typeguard failed.
+ * @param [logger] A function that can log errors specifying exactly where the typeguard failed
  */
 ${exported ? 'export ' : ''}function ${writeTypeguardName(name)}(testData: unknown, logger?: (message: string) => void): testData is ${name} {
 ${indent}try {
-${indent}${indent}${writeTypeAssertionName(name)}(testData);
+${indent}${indent}${writeTypeAssertionName(name)}(testData, logger);
 ${indent}${indent}return true;
 ${indent}} catch (e) {
 ${indent}${indent}if (logger) {
