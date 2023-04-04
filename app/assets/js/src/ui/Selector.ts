@@ -11,7 +11,7 @@ export const Selector = {
 	GENERATE: '.js-typeguardian__generate',
 	COPY: '.js-typeguardian__copy',
 
-	USE_ASSERTIONS: '.js-typeguardian__use-assertions',
+	ALLOW_ENHANCED_DEBUGGING: '.js-typeguardian__allow-enhanced-debugging',
 	INDENTATION: '.js-typeguardian__indentation',
 
 	TOAST: '.js-toast',

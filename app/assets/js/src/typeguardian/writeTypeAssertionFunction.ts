@@ -26,24 +26,24 @@ export function writeTypeAssertionFunction(typedefArg: TypeDef | string, indent 
  *
  * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
  *
- * @param [logger] A function that can log errors specifying exactly where nested typeguards failed
+ * @param [errorLogger] A function that can log errors specifying exactly where nested typeguards failed
  */
-function ${writeTypeAssertionName(name)}(testData: unknown, logger?: (message: string) => void): asserts testData is ${name} {
+function ${writeTypeAssertionName(name)}(testData: unknown, errorLogger?: (message: string) => void): asserts testData is ${name} {
 ${indent}const data = testData as ${name};
 
 ${indent}if (!(
 ${indent}${indent}typeof data === 'object' &&
 ${indent}${indent}data !== null
 ${indent})) {
-${indent}${indent}throw new TypeError(\`Tested value was not an object\`);
+${indent}${indent}throw new TypeError('Tested value was not an object');
 ${indent}}
 
 ${indent}${props.map(([propName, propType]) => `if (!(${writeTypeguardExpression(propName, propType, {
 	indent,
 	indentLevel: 1,
-	useAssertions: true,
+	passErrorLogger: true,
 })})) {
-${indent}${indent}throw new TypeError(\`${name} type assertion failed: Property ${propName} was not of type \\\`${propType}\\\`\`);
+${indent}${indent}throw new TypeError('\`${name}\` typeguard failed: Property \`${propName}\` was not of type \`${propType}\`');
 ${indent}}`).join(`\n\n${indent}`)}
 }
 `;
@@ -53,15 +53,15 @@ ${indent}}`).join(`\n\n${indent}`)}
  *
  * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
  *
- * @param [logger] A function that can log errors specifying exactly where the typeguard failed
+ * @param [errorLogger] A function that can log errors specifying exactly where the typeguard failed
  */
-${exported ? 'export ' : ''}function ${writeTypeguardName(name)}(testData: unknown, logger?: (message: string) => void): testData is ${name} {
+${exported ? 'export ' : ''}function ${writeTypeguardName(name)}(testData: unknown, errorLogger?: (message: string) => void): testData is ${name} {
 ${indent}try {
-${indent}${indent}${writeTypeAssertionName(name)}(testData, logger);
+${indent}${indent}${writeTypeAssertionName(name)}(testData, errorLogger);
 ${indent}${indent}return true;
 ${indent}} catch (e) {
-${indent}${indent}if (logger) {
-${indent}${indent}${indent}logger(e instanceof Error ? e.message : String(e));
+${indent}${indent}if (errorLogger) {
+${indent}${indent}${indent}errorLogger(e instanceof Error ? e.message : String(e));
 ${indent}${indent}}
 ${indent}${indent}return false;
 ${indent}}

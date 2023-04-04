@@ -24,9 +24,9 @@ export function setOptions(options: TypeGuardianOptions, $instance?: Element | I
 }
 
 function applyOptionsToInstance(options: TypeGuardianOptions, $instance: Element): void {
-	const $useAssertions = $instance.querySelector(Selector.USE_ASSERTIONS);
-	if ($useAssertions instanceof HTMLInputElement) {
-		$useAssertions.checked = options.useAssertions;
+	const $allowEnhancedDebugging = $instance.querySelector(Selector.ALLOW_ENHANCED_DEBUGGING);
+	if ($allowEnhancedDebugging instanceof HTMLInputElement) {
+		$allowEnhancedDebugging.checked = options.allowEnhancedDebugging;
 	}
 
 	const $indentation = $instance.querySelector(Selector.INDENTATION);

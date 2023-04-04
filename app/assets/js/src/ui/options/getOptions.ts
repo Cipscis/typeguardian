@@ -6,12 +6,12 @@ import { TypeGuardianOptions } from './TypeGuardianOptions.js';
  * Retrieve the options from the UI.
  */
 export function getOptions($instance: Element): TypeGuardianOptions | null {
-	const $useAssertions = $instance.querySelector(Selector.USE_ASSERTIONS);
-	if (!($useAssertions instanceof HTMLInputElement)) {
+	const $allowEnhancedDebugging = $instance.querySelector(Selector.ALLOW_ENHANCED_DEBUGGING);
+	if (!($allowEnhancedDebugging instanceof HTMLInputElement)) {
 		return null;
 	}
 
-	const useAssertions = $useAssertions.checked;
+	const allowEnhancedDebugging = $allowEnhancedDebugging.checked;
 
 	const $indentation = $instance.querySelector(Selector.INDENTATION);
 	if (!($indentation instanceof HTMLSelectElement)) {
@@ -24,7 +24,7 @@ export function getOptions($instance: Element): TypeGuardianOptions | null {
 	}
 
 	return {
-		useAssertions,
+		allowEnhancedDebugging,
 		indentation,
 	};
 }

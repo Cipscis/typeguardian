@@ -1,7 +1,7 @@
 import { Indentation, isIndentation } from './Indentation.js';
 
 export interface TypeGuardianOptions {
-	useAssertions: boolean;
+	allowEnhancedDebugging: boolean;
 	indentation: Indentation;
 }
 /**
@@ -19,7 +19,7 @@ export function isTypeGuardianOptions(testData: unknown): testData is TypeGuardi
 		return false;
 	}
 
-	if (!(typeof data.useAssertions === 'boolean')) {
+	if (!(typeof data.allowEnhancedDebugging === 'boolean')) {
 		return false;
 	}
 

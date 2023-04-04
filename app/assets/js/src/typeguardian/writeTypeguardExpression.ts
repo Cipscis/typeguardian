@@ -4,7 +4,7 @@ import { writeTypeguardName } from './writeTypeguardName.js';
 interface WriteTypeguardExpressionOptions {
 	indent: string;
 	indentLevel: number;
-	useAssertions?: boolean;
+	passErrorLogger?: boolean;
 }
 
 /**
@@ -47,8 +47,8 @@ export function writeTypeguardExpression(propName: string, propType: string, opt
 ${baseIndent}${indent}Array.isArray(data.${propName}) &&
 ${baseIndent}${indent}data.${propName}.every(${
 	innerType.match(customTypePattern)
-		? options.useAssertions
-			? `(el) => ${writeTypeguardName(innerType)}(el, logger)`
+		? options.passErrorLogger
+			? `(el) => ${writeTypeguardName(innerType)}(el, errorLogger)`
 			: writeTypeguardName(innerType)
 		: `() => ${writeTypeguardExpression(propName, innerType, {
 			indent,
@@ -79,7 +79,7 @@ ${baseIndent}`;
 	// Custom types
 	const isCustomType = (customTypePattern).test(propType);
 	if (isCustomType) {
-		return `${writeTypeguardName(propType)}(data.${propName}${options.useAssertions ? ', logger' : ''})`;
+		return `${writeTypeguardName(propType)}(data.${propName}${options.passErrorLogger ? ', errorLogger' : ''})`;
 	}
 
 	// Unrecognised pattern, left to developer to implement

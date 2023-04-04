@@ -29,7 +29,7 @@ export function generate(this: HTMLElement): void {
 	try {
 		const options = getOptions($instance);
 
-		const output = options?.useAssertions
+		const output = options?.allowEnhancedDebugging
 			? writeTypeAssertionFunction(input, options?.indentation)
 			: writeTypeguardFunction(input, options?.indentation);
 
