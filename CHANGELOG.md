@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2023-04-05
+
+### Added
+
+* Added the ability to generate type assertion functions, which are easier to debug
+
 ## [1.1.1] - 2023-04-04
 
 ### Added

@@ -37,5 +37,6 @@ function initEvents(): void {
 	document.querySelectorAll<HTMLElement>(Selector.COPY).forEach((el) => el.addEventListener('click', copy));
 
 	// Persist options
+	document.querySelectorAll<HTMLElement>(Selector.ALLOW_ENHANCED_DEBUGGING).forEach((el) => el.addEventListener('change', persistOptions));
 	document.querySelectorAll<HTMLElement>(Selector.INDENTATION).forEach((el) => el.addEventListener('change', persistOptions));
 }

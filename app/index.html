@@ -30,6 +30,11 @@
 
 			<div class="typeguardian__controls__options">
 				<label>
+					Allow enhanced debugging
+					<input class="js-typeguardian__allow-enhanced-debugging" type="checkbox" />
+				</label>
+
+				<label>
 					Indentation
 					<select class="js-typeguardian__indentation">
 						<option value="	">Tabs</option>
@@ -59,6 +64,30 @@
 			<p>The solution to this is to write a <strong>typeguard</strong> function, which checks that an object meets all of our expectations when we expect it to be of a particular type.</p>
 
 			<p>However, the task of writing a typeguard is quite tedious. Luckily, it's also quite formulaic, which means it's often possible to generate a typeguard function based off a type definition. That's what this tool, TypeGuardian, is for.</p>
+		</section>
+
+		<section>
+			<h2>Options</h2>
+
+			<p>TypeGuardian will remember your preferred options. Here is how they work:</p>
+
+			<details>
+				<summary><h3>Allow enhanced debugging</h3></summary>
+
+				<p>When this option is enabled, TypeGuardian will generate a function that uses TypeScript's <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions" target="_blank"><code>asserts</code> keyword</a>, which will throw an error if a tested value doesn't meet your type requirements. This function is then called within your type's generated typeguard function, which returns a boolean value as normal.</p>
+
+				<p>By throwing an error, instead of just returning a boolean, it's possible to provide information as to how the typeguard fails.</p>
+
+				<p>In order to expose this information, typeguard functions generated with this option enabled will have an optional <code>errorLogger</code> argument, which will allow you to log the failure message to somewhere like the console. For example, you might call <code>isMyCustomType(value, console.error)</code> to log a failure message to the console as an error.</p>
+
+				<p>Any nested typeguards, for more complex types, will also be passed this <code>errorLogger</code> function. So it's expected that they will all have been generated with this option enabled.</p>
+			</details>
+
+			<details>
+				<summary><h3>Indentation</h3></summary>
+
+				<p>This option allows you to select your preferred type of indentation.</p>
+			</details>
 		</section>
 
 		<section>

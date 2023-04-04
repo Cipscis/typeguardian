@@ -2,6 +2,7 @@ import { TypeDef } from './TypeDef.js';
 import { readTypeDef } from './readTypeDef.js';
 import { writeTypeguardExpression } from './writeTypeguardExpression.js';
 import { version } from './version.js';
+import { writeTypeguardName } from './writeTypeguardName.js';
 
 /**
  * Write a typeguard function for an object type with properties.
@@ -24,7 +25,7 @@ export function writeTypeguardFunction(typedefArg: TypeDef | string, indent = ' 
  *
  * Generated with {@link https://cipscis.github.io/typeguardian TypeGuardian} v${version}
  */
-${exported ? 'export ' : ''}function is${name}(testData: unknown): testData is ${name} {
+${exported ? 'export ' : ''}function ${writeTypeguardName(name)}(testData: unknown): testData is ${name} {
 ${indent}const data = testData as ${name};
 
 ${indent}if (!(
@@ -34,7 +35,10 @@ ${indent})) {
 ${indent}${indent}return false;
 ${indent}}
 
-${indent}${props.map(([propName, propType]) => `if (!(${writeTypeguardExpression(propName, propType, indent, 1)})) {
+${indent}${props.map(([propName, propType]) => `if (!(${writeTypeguardExpression(propName, propType, {
+	indent,
+	indentLevel: 1,
+})})) {
 ${indent}${indent}return false;
 ${indent}}`).join(`\n\n${indent}`)}
 
