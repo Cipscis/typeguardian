@@ -3,4 +3,4 @@
  *
  * For example, the type `CustomType` would have a typeguard function `isCustomType`.
  */
-export declare function writeTypeGuardName(typeName: string): string;
+export declare function writeTypeguardName(typeName: string): string;

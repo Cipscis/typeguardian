@@ -31,6 +31,7 @@ function initEvents() {
     // Copy
     document.querySelectorAll(Selector.COPY).forEach((el) => el.addEventListener('click', copy));
     // Persist options
+    document.querySelectorAll(Selector.ALLOW_ENHANCED_DEBUGGING).forEach((el) => el.addEventListener('change', persistOptions));
     document.querySelectorAll(Selector.INDENTATION).forEach((el) => el.addEventListener('change', persistOptions));
 }
 //# sourceMappingURL=index.js.map

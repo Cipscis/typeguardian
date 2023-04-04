@@ -18,6 +18,10 @@ export function setOptions(options, $instance) {
     }
 }
 function applyOptionsToInstance(options, $instance) {
+    const $allowEnhancedDebugging = $instance.querySelector(Selector.ALLOW_ENHANCED_DEBUGGING);
+    if ($allowEnhancedDebugging instanceof HTMLInputElement) {
+        $allowEnhancedDebugging.checked = options.allowEnhancedDebugging;
+    }
     const $indentation = $instance.querySelector(Selector.INDENTATION);
     if ($indentation instanceof HTMLSelectElement) {
         $indentation.value = options.indentation;

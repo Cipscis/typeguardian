@@ -1,9 +1,10 @@
 import { writeIndentation } from './writeIndentation.js';
-import { writeTypeGuardName } from './writeTypeguardName.js';
+import { writeTypeguardName } from './writeTypeguardName.js';
 /**
  * Write a typeguard expression for a single type, i.e. not an object with properties.
  */
-export function writeTypeguardExpression(propName, propType, indent = '    ', indentLevel = 0) {
+export function writeTypeguardExpression(propName, propType, options) {
+    const { indent, indentLevel, } = options;
     const baseIndent = writeIndentation(indent, indentLevel);
     /** These primitives can be checked via the `typeof` operator */
     const typeofPrimitives = ['boolean', 'number', 'string', 'undefined'];
@@ -27,8 +28,13 @@ export function writeTypeguardExpression(propName, propType, indent = '    ', in
         return `
 ${baseIndent}${indent}Array.isArray(data.${propName}) &&
 ${baseIndent}${indent}data.${propName}.every(${innerType.match(customTypePattern)
-            ? writeTypeGuardName(innerType)
-            : `() => ${writeTypeguardExpression(propName, innerType, indent, indentLevel + 1)}`})
+            ? options.passErrorLogger
+                ? `(el) => ${writeTypeguardName(innerType)}(el, errorLogger)`
+                : writeTypeguardName(innerType)
+            : `() => ${writeTypeguardExpression(propName, innerType, {
+                indent,
+                indentLevel: indentLevel + 1,
+            })}`})
 ${baseIndent}`;
     }
     // Union types
@@ -40,13 +46,16 @@ ${baseIndent}`;
     }
     if (unionMembers.length > 1) {
         return `
-${baseIndent}${indent}${unionMembers.map((type) => writeTypeguardExpression(propName, type, indent, indentLevel + 1)).join(` ||\n${baseIndent}${indent}`)}
+${baseIndent}${indent}${unionMembers.map((type) => writeTypeguardExpression(propName, type, {
+            indent,
+            indentLevel: indentLevel + 1,
+        })).join(` ||\n${baseIndent}${indent}`)}
 ${baseIndent}`;
     }
     // Custom types
     const isCustomType = (customTypePattern).test(propType);
     if (isCustomType) {
-        return `${writeTypeGuardName(propType)}(data.${propName})`;
+        return `${writeTypeguardName(propType)}(data.${propName}${options.passErrorLogger ? ', errorLogger' : ''})`;
     }
     // Unrecognised pattern, left to developer to implement
     return `false /* TODO: implement typeguard for \`${propName}: ${propType}\`*/`;

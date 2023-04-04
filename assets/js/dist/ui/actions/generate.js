@@ -1,3 +1,4 @@
+import { writeTypeAssertionFunction } from '../../typeguardian/writeTypeAssertionFunction.js';
 import { writeTypeguardFunction } from '../../typeguardian/writeTypeguardFunction.js';
 import { CssClass } from '../CssClass.js';
 import { getOptions } from '../options/getOptions.js';
@@ -22,7 +23,9 @@ export function generate() {
     const input = $input.value;
     try {
         const options = getOptions($instance);
-        const output = writeTypeguardFunction(input, options?.indentation);
+        const output = options?.allowEnhancedDebugging
+            ? writeTypeAssertionFunction(input, options?.indentation)
+            : writeTypeguardFunction(input, options?.indentation);
         $output.value = output;
         $output.classList.remove(CssClass.ERROR);
     }
