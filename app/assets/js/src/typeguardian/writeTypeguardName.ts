@@ -3,6 +3,6 @@
  *
  * For example, the type `CustomType` would have a typeguard function `isCustomType`.
  */
-export function writeTypeGuardName(typeName: string): string {
+export function writeTypeguardName(typeName: string): string {
 	return `is${typeName}`;
 }
