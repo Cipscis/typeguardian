@@ -6,6 +6,13 @@ import { TypeGuardianOptions } from './TypeGuardianOptions.js';
  * Retrieve the options from the UI.
  */
 export function getOptions($instance: Element): TypeGuardianOptions | null {
+	const $useAssertions = $instance.querySelector(Selector.USE_ASSERTIONS);
+	if (!($useAssertions instanceof HTMLInputElement)) {
+		return null;
+	}
+
+	const useAssertions = $useAssertions.checked;
+
 	const $indentation = $instance.querySelector(Selector.INDENTATION);
 	if (!($indentation instanceof HTMLSelectElement)) {
 		return null;
@@ -17,6 +24,7 @@ export function getOptions($instance: Element): TypeGuardianOptions | null {
 	}
 
 	return {
+		useAssertions,
 		indentation,
 	};
 }

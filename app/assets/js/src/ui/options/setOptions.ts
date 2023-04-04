@@ -24,6 +24,11 @@ export function setOptions(options: TypeGuardianOptions, $instance?: Element | I
 }
 
 function applyOptionsToInstance(options: TypeGuardianOptions, $instance: Element): void {
+	const $useAssertions = $instance.querySelector(Selector.USE_ASSERTIONS);
+	if ($useAssertions instanceof HTMLInputElement) {
+		$useAssertions.checked = options.useAssertions;
+	}
+
 	const $indentation = $instance.querySelector(Selector.INDENTATION);
 	if ($indentation instanceof HTMLSelectElement) {
 		$indentation.value = options.indentation;
