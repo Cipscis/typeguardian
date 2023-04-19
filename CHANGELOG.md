@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2023-04-19
+
+### Fixed
+
+* Typeguards for primitive array types, such as `string[]`, were not generated correctly
+
 ## [1.2.0] - 2023-04-05
 
 ### Added

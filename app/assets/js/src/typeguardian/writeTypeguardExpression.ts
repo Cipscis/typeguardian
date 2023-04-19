@@ -5,6 +5,13 @@ interface WriteTypeguardExpressionOptions {
 	indent: string;
 	indentLevel: number;
 	passErrorLogger?: boolean;
+
+	/**
+	 * By default, we assume we are checking a property on an object called `data`.
+	 *
+	 * If `isValue` is `true`, that means we are checking a property directly, without accessing it on `data`.
+	 */
+	isValue?: boolean;
 }
 
 /**
@@ -30,12 +37,12 @@ export function writeTypeguardExpression(propName: string, propType: string, opt
 
 	// `typeof` checks
 	if (typeofPrimitives.includes(propType)) {
-		return `typeof data.${propName} === '${propType}'`;
+		return `typeof ${options.isValue ? '' : 'data.'}${propName} === '${propType}'`;
 	}
 
 	// `null` checks
 	if (propType === 'null') {
-		return `data.${propName} === null`;
+		return `${options.isValue ? '' : 'data.'}${propName} === null`;
 	}
 
 	// Array types
@@ -44,15 +51,16 @@ export function writeTypeguardExpression(propName: string, propType: string, opt
 		const innerType = arrayMatch[2] ?? arrayMatch[3];
 
 		return `
-${baseIndent}${indent}Array.isArray(data.${propName}) &&
-${baseIndent}${indent}data.${propName}.every(${
+${baseIndent}${indent}Array.isArray(${options.isValue ? '' : 'data.'}${propName}) &&
+${baseIndent}${indent}${options.isValue ? '' : 'data.'}${propName}.every(${
 	innerType.match(customTypePattern)
 		? options.passErrorLogger
 			? `(el) => ${writeTypeguardName(innerType)}(el, errorLogger)`
 			: writeTypeguardName(innerType)
-		: `() => ${writeTypeguardExpression(propName, innerType, {
+		: `(el) => ${writeTypeguardExpression('el', innerType, {
 			indent,
 			indentLevel: indentLevel + 1,
+			isValue: true,
 		})}`
 })
 ${baseIndent}`;
