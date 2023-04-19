@@ -15,25 +15,26 @@ export function writeTypeguardExpression(propName, propType, options) {
     const customTypePattern = /^([A-Z][a-z]+)+$/;
     // `typeof` checks
     if (typeofPrimitives.includes(propType)) {
-        return `typeof data.${propName} === '${propType}'`;
+        return `typeof ${options.isValue ? '' : 'data.'}${propName} === '${propType}'`;
     }
     // `null` checks
     if (propType === 'null') {
-        return `data.${propName} === null`;
+        return `${options.isValue ? '' : 'data.'}${propName} === null`;
     }
     // Array types
     const arrayMatch = propType.match(arrayPattern);
     if (arrayMatch) {
         const innerType = arrayMatch[2] ?? arrayMatch[3];
         return `
-${baseIndent}${indent}Array.isArray(data.${propName}) &&
-${baseIndent}${indent}data.${propName}.every(${innerType.match(customTypePattern)
+${baseIndent}${indent}Array.isArray(${options.isValue ? '' : 'data.'}${propName}) &&
+${baseIndent}${indent}${options.isValue ? '' : 'data.'}${propName}.every(${innerType.match(customTypePattern)
             ? options.passErrorLogger
                 ? `(el) => ${writeTypeguardName(innerType)}(el, errorLogger)`
                 : writeTypeguardName(innerType)
-            : `() => ${writeTypeguardExpression(propName, innerType, {
+            : `(el) => ${writeTypeguardExpression('el', innerType, {
                 indent,
                 indentLevel: indentLevel + 1,
+                isValue: true,
             })}`})
 ${baseIndent}`;
     }
