@@ -2,6 +2,13 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2023-04-20
+
+### Added
+
+* The correct type check is now made for `Date` types
+* Interfaces that extend another interface are now supported
+
 ## [1.2.1] - 2023-04-19
 
 ### Fixed
