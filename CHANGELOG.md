@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2023-04-21
+
+### Added
+
+* Can now have properties typed `any` (telling TypeScript you don't care about the type, not recommended) or `unknown` (essentially deferring a type check, typically only recommended for deprecated properties)
+
 ## [1.3.0] - 2023-04-20
 
 ### Added
