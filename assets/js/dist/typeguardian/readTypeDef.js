@@ -30,12 +30,13 @@ export function readTypeDef(typedef) {
     if (lines.length === 0) {
         throw new Error(`Couldn't read empty type definition`);
     }
-    const nameMatch = lines[0].match(/^(export\s+)?(type|interface)\s+(\w+)\s*=?\s*{(\s*\/\/.*)?$/);
+    const nameMatch = lines[0].match(/^(export\s+)?(type|interface)\s+(\w+)( extends (\w+))?\s*=?\s*{(\s*\/\/.*)?$/);
     if (!nameMatch) {
         throw new Error(`Couldn't determine name of custom type`);
     }
     const exported = Boolean(nameMatch[1]);
     const name = nameMatch[3];
+    const extendedInterface = nameMatch[5];
     // Ignore first and last line
     const propLines = lines.slice(1, -1);
     const props = propLines.map((line, lineNumber) => {
@@ -57,10 +58,14 @@ export function readTypeDef(typedef) {
         const propType = `${lineMatch[3]}${isOptional ? ' | undefined' : ''}`;
         return [propName, propType];
     }).filter((el) => Boolean(el));
-    return {
+    const typeDef = {
         name,
         props,
         exported,
     };
+    if (extendedInterface) {
+        typeDef.extendedInterface = extendedInterface;
+    }
+    return typeDef;
 }
 //# sourceMappingURL=readTypeDef.js.map

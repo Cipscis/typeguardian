@@ -4,5 +4,5 @@ import { TypeDef } from './TypeDef.js';
  *
  * This function is intended to be used for generating code, not actually run within the browser.
  */
-export declare function writeTypeguardFunction(typedef: TypeDef, indent?: string): string;
-export declare function writeTypeguardFunction(typedefString: string, indent?: string): string;
+export declare function writeTypeguardFunction(typeDef: TypeDef, indent?: string): string;
+export declare function writeTypeguardFunction(typeDefString: string, indent?: string): string;

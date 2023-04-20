@@ -84,6 +84,12 @@ ${baseIndent}${indent}${unionMembers.map((type) => writeTypeguardExpression(prop
 ${baseIndent}`;
 	}
 
+	// Date
+	const isDate = propType === 'Date';
+	if (isDate) {
+		return `data.${propName} instanceof Date`;
+	}
+
 	// Custom types
 	const isCustomType = (customTypePattern).test(propType);
 	if (isCustomType) {
