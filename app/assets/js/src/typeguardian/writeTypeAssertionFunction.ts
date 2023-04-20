@@ -17,6 +17,7 @@ export function writeTypeAssertionFunction(typedefArg: TypeDef | string, indent 
 
 	const {
 		name,
+		extendedInterface,
 		props,
 		exported,
 	} = typedef;
@@ -31,12 +32,18 @@ export function writeTypeAssertionFunction(typedefArg: TypeDef | string, indent 
 function ${writeTypeAssertionName(name)}(testData: unknown, errorLogger?: (message: string) => void): asserts testData is ${name} {
 ${indent}const data = testData as ${name};
 
-${indent}if (!(
+${
+	extendedInterface
+	? `${indent}if (!(${writeTypeguardName(extendedInterface)}(data))) {
+${indent}${indent}throw new TypeError('Tested value was not of type \`${extendedInterface}\`');
+${indent}}`
+	: `${indent}if (!(
 ${indent}${indent}typeof data === 'object' &&
 ${indent}${indent}data !== null
 ${indent})) {
 ${indent}${indent}throw new TypeError('Tested value was not an object');
-${indent}}
+${indent}}`
+}
 
 ${indent}${props.map(([propName, propType]) => `if (!(${writeTypeguardExpression(propName, propType, {
 	indent,
