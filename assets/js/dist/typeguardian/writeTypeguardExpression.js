@@ -46,6 +46,13 @@ ${baseIndent}`;
         console.warn(`WARNING: Duplicate union member detected in type ${propType}`);
     }
     if (unionMembers.length > 1) {
+        // If a union includes `any` or `unknown` there's no point in checking its other union members
+        if (unionMembers.includes('any')) {
+            return writeTypeguardExpression(propName, 'any', options);
+        }
+        else if (unionMembers.includes('unknown')) {
+            return writeTypeguardExpression(propName, 'unknown', options);
+        }
         return `
 ${baseIndent}${indent}${unionMembers.map((type) => writeTypeguardExpression(propName, type, {
             indent,
@@ -57,6 +64,12 @@ ${baseIndent}`;
     const isDate = propType === 'Date';
     if (isDate) {
         return `data.${propName} instanceof Date`;
+    }
+    // `any` and `unknown`
+    const isUncheckable = propType === 'any' || propType === 'unknown';
+    if (isUncheckable) {
+        // No narrowing is needed for these types
+        return 'true';
     }
     // Custom types
     const isCustomType = (customTypePattern).test(propType);
